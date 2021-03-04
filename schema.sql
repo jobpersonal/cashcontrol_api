@@ -15,8 +15,10 @@ CREATE TABLE income (
   id SERIAL NOT NULL,
   concept VARCHAR(50) NOT NULL,
   amount DECIMAL(12,2) NOT NULL,
+  periodicity VARCHAR(4) NOT NULL,
   created_at TIMESTAMP NOT NULL,
-  type_income VARCHAR(50) NOT NULL,
+  finish_at TIMESTAMP,
+  income_type VARCHAR(50) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -28,10 +30,22 @@ CREATE TABLE expense (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE debt (
+  id SERIAL NOT NULL,
+  concept VARCHAR(50) NOT NULL,
+  debt_value DECIMAL(12,2) NOT NULL,
+  periodicity VARCHAR(4) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  finish_at TIMESTAMP NOT NULL,
+  debt_type VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE "transaction" (
   id SERIAL NOT NULL,
   income_id INTEGER UNIQUE,
   expense_id INTEGER UNIQUE,
+  debt_id INTEGER UNIQUE,
   user_id INTEGER NOT NULL,
   PRIMARY KEY (id)
 );
@@ -74,6 +88,7 @@ CREATE TABLE investments (
 ALTER TABLE "user" ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE income ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE expense ALTER COLUMN created_at SET DEFAULT now();
+ALTER TABLE debt ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE consortium ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE consortium_transaction ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE investments ALTER COLUMN created_at SET DEFAULT now();
@@ -93,6 +108,10 @@ FOREIGN KEY (income_id) REFERENCES income(id);
 ALTER TABLE "transaction"
 ADD CONSTRAINT  fk_expense
 FOREIGN KEY (expense_id) REFERENCES expense(id);
+
+ALTER TABLE "transaction"
+ADD CONSTRAINT fk_debt
+FOREIGN KEY (debt_id) REFERENCES debt(id);
 
 ALTER TABLE "transaction"
 ADD CONSTRAINT  fk_user
