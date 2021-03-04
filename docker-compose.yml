@@ -1,0 +1,13 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    # restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: my_p4ssword3322
+      POSTGRES_DB: cashcontrol
+    # volumes:
+    #   - /Users/jobocanegra/dev/node_projects/cashcontrol_api/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
