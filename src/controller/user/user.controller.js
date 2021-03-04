@@ -2,8 +2,8 @@ if (!process.env.ISPROD) require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { userValidate } = require('./../../validations/user');
 const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient()
 const bcrypt = require('bcrypt');
-const prisma = new PrismaClient();
 
 const refreshTokens = [];
 
@@ -14,14 +14,13 @@ const signUpController = async (req, res) => {
 	if (error) {
 		res.status(400).json({ error: error.details[0].message });
 	} else {
-		const now = new Date();
-		
-		bcrypt.genSalt(10, function async (err, salt) {
-      bcrypt.hash(password, salt, function async (err, hash) {
+    bcrypt.genSalt(10, async (err, salt) => {
+      bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
           res.status(501).json({ error: err });
         } else {
           try {
+            const now = new Date();
             const user = await prisma.user.create({ 
               data: {
                 name,

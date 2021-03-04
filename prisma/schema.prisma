@@ -76,7 +76,7 @@ model user {
   name                   String                   @db.VarChar(50)
   lastname               String                   @db.VarChar(50)
   created_at             DateTime                 @default(now()) @db.Timestamp(6)
-  updatedat              DateTime?                @db.Timestamp(6)
+  updated_at             DateTime?                @db.Timestamp(6)
   email                  String                   @unique @db.VarChar(50)
   phone                  String                   @unique @db.VarChar(10)
   password               String                   @db.VarChar(255)
