@@ -25,7 +25,7 @@ CREATE TABLE income (
 CREATE TABLE expense (
   id SERIAL NOT NULL,
   concept VARCHAR(50) NOT NULL,
-  ammount DECIMAL(12,2) NOT NULL,
+  amount DECIMAL(12,2) NOT NULL,
   created_at TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
 );
