@@ -1,5 +1,5 @@
 if (!process.env.ISPROD) require('dotenv').config();
-const { 
+const {
   incomeValidate,
   expenseValidate,
   debtValidate } = require('./../../validations/transactions');
@@ -50,7 +50,7 @@ const storeIncomeController = async (req, res) => {
       res.status(201).json({ succes: true, data: transaction })
     } catch (err) {
       console.error(err);
-      res.status(501).json({ error: 'Prisma exception.'});
+      res.status(501).json({ error: 'Prisma exception.' });
     }
   }
 };
@@ -128,9 +128,9 @@ const storeDebtController = async (req, res) => {
     res.status(400).json({ error: error.details[0].message });
   } else {
     try {
-      const user = await prisma.user.findFirst({ 
+      const user = await prisma.user.findFirst({
         where: {
-          phone: req.user.phone 
+          phone: req.user.phone
         }
       });
       const now = new Date();
@@ -229,6 +229,33 @@ const getAllExpenseController = async (req, res) => {
   }
 };
 
+const getTransactionsByRangeDateController = async (req, res) => {
+  const dates = req.params;
+
+  const initDate = new Date(Date.parse(dates.initDate));
+  const endDate = new Date(Date.parse(dates.endDate));
+
+  if (initDate == 'Invalid Date'|| endDate == 'Invalid Date') {
+    console.error({error: 'Invalid Date'});
+    res.json({ ok: false , error: 'Invalid Date'})
+  } else {
+    const transactions = await prisma.transaction.findMany({
+      include: {
+        income: {},
+        expense: {},
+        debt: {}
+      },
+      where: {
+        created_at: {
+          gte: initDate, 
+          lte: endDate
+        }
+      }
+    });
+    res.json({ ok: true, data: transactions })
+  }
+};
+
 exports.storeIncomeController = storeIncomeController;
 exports.getAllTransactionsController = getAllTransactionsController;
 exports.storeExpenseController = storeExpenseController;
@@ -236,3 +263,4 @@ exports.storeDebtController = storeDebtController;
 exports.getAllDebtController = getAllDebtController;
 exports.getAllExpenseController = getAllExpenseController;
 exports.getAllIncomeController = getAllIncomeController;
+exports.getTransactionsByRangeDateController = getTransactionsByRangeDateController;

@@ -5,6 +5,7 @@ const { storeExpenseController } = require('./transaction.controller');
 const { getAllIncomeController } = require('./transaction.controller');
 const { getAllExpenseController } = require('./transaction.controller');
 const { getAllDebtController } = require('./transaction.controller');
+const { getTransactionsByRangeDateController } = require('./transaction.controller');
 
 
 exports.storeIncome = storeIncomeController;
@@ -14,3 +15,4 @@ exports.storeExpense = storeExpenseController;
 exports.getAllIncome = getAllIncomeController;
 exports.getAllExpense = getAllExpenseController;
 exports.getAllDebt = getAllDebtController;
+exports.getTransactionsByRangeDate = getTransactionsByRangeDateController;
