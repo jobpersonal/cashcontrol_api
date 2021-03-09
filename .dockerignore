@@ -1,0 +1,6 @@
+node_modules
+.gitignore
+schema.sql
+Dockerfile
+docker-compose.yml
+.yarn
