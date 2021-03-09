@@ -43,6 +43,7 @@ CREATE TABLE debt (
 
 CREATE TABLE "transaction" (
   id SERIAL NOT NULL,
+  created_at TIMESTAMP NOT NULL,
   income_id INTEGER UNIQUE,
   expense_id INTEGER UNIQUE,
   debt_id INTEGER UNIQUE,
@@ -86,6 +87,7 @@ CREATE TABLE investments (
 );
 
 ALTER TABLE "user" ALTER COLUMN created_at SET DEFAULT now();
+ALTER TABLE "transaction" ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE income ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE expense ALTER COLUMN created_at SET DEFAULT now();
 ALTER TABLE debt ALTER COLUMN created_at SET DEFAULT now();
