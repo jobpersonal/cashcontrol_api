@@ -31,7 +31,7 @@ const signUpController = async (req, res) => {
                 email
               }
             });
-            res.status(201).json({ succes: true, data: user })
+            res.status(201).json({ success: true, data: user })
           } catch (err) {
             res.status(501).json({ error: err });
           }
@@ -56,7 +56,7 @@ const signInController = async (req, res) => {
           const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20m' });
           const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
           refreshTokens.push(refreshToken);
-          res.json({ token: accessToken, refresh_token: refreshToken });
+          res.json({ token: accessToken, refresh_token: refreshToken, data: user });
         });
       } catch (err) {
         res.status(501).json({ error: err });
@@ -76,6 +76,32 @@ const refreshTokenController = (req, res) => {
   });
 }
 
+const updateUserController = async (req, res) => {
+  const { name, lastname, phone, newPhone, email } = req.body;
+  const { error } = userValidate({ name, lastname, password: 'c123$Ab-+', phone, email });
+
+  if (error) {
+    res.status(400).json({ error: error.details[0].message });
+  } else {
+    try {
+      const user = await prisma.user.update({
+        where: { phone },
+        data: {
+          name,
+          lastname,
+          phone: newPhone || phone,
+          email
+        }
+      });
+      res.status(201).json({ success: true, data: user });
+    } catch (err) {
+      console.error('Error ' + new Date(), err);
+      res.status(501).json({ error: 'Prisma error.' });
+    }
+  }
+};
+
 exports.signInController = signInController;
 exports.signUpController = signUpController;
 exports.refreshTokenController = refreshTokenController;
+exports.updateUserController = updateUserController;

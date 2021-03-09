@@ -9,6 +9,7 @@ router.use('/api', apiMiddleware);
 router.post('/jwt/token', userController.refreshToken);
 router.post('/jwt/signin', userController.signIn);
 router.post('/signup', userController.signUp);
+router.put('/api/user', userController.updateUser);
 
 router.post('/api/income', transactionController.storeIncome);
 router.get('/api/transactions', transactionController.getAllTransactions);
@@ -17,5 +18,6 @@ router.post('/api/debt', transactionController.storeDebt);
 router.get('/api/income', transactionController.getAllIncome);
 router.get('/api/debt', transactionController.getAllDebt);
 router.get('/api/expense', transactionController.getAllExpense);
+router.get('/api/transactions/:initDate/:endDate', transactionController.getTransactionsByRangeDate);
 
 module.exports = router;
