@@ -1,9 +1,21 @@
-db:
-  container_name: cashcontroldb
-  image: postgres
-  environment:
-    POSTGRES_USER: user
-    POSTGRES_PASSWORD: my_p4ssword3322
-    POSTGRES_DB: cashcontrol
-  ports:
-    - 5432:5432
+version: "3"
+services:
+  db:
+    container_name: cashcontroldb
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: my_p4ssword3322
+      POSTGRES_DB: cashcontrol
+    ports:
+      - 5432:5432
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Containerfile
+    ports:
+      - 80:5200
+    depends_on:
+      - db
+    command: ./wait-for.sh db:27017 -- ./init.sh
