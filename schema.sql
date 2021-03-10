@@ -83,6 +83,7 @@ CREATE TABLE investments (
   capital DECIMAL(12,2) NOT NULL,
   monthly_percentage DECIMAL(3,2) NOT NULL,
   created_at TIMESTAMP,
+  user_id INTEGER UNIQUE NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -127,3 +128,6 @@ ALTER TABLE consortium_detail
 ADD CONSTRAINT fk_consortium
 FOREIGN KEY (consortium_id) REFERENCES consortium(id);
 
+ALTER TABLE investments
+ADD CONSTRAINT fk_user
+FOREIGN KEY (user_id) REFERENCES "user"(id);
