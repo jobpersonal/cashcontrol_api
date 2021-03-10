@@ -11,6 +11,7 @@ services:
       - 5432:5432
     networks:
       - app-network
+      
   api:
     container_name: api
     build:
@@ -20,9 +21,9 @@ services:
       - 80:5200
     depends_on:
       - db
-    command: ./wait-for.sh db:27017 -- ./init.sh
     networks:
       - app-network
+    command: ./wait-for.sh db:5432 -- ./init.sh
 networks:
   app-network:
     driver: bridge
