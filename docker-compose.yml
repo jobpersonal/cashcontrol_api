@@ -1,10 +1,9 @@
-services:
-  db:
-    container_name: cashcontroldb
-    image: postgres
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: my_p4ssword3322
-      POSTGRES_DB: cashcontrol
-    ports:
-      - 5432:5432
+db:
+  container_name: cashcontroldb
+  image: postgres
+  environment:
+    POSTGRES_USER: user
+    POSTGRES_PASSWORD: my_p4ssword3322
+    POSTGRES_DB: cashcontrol
+  ports:
+    - 5432:5432
