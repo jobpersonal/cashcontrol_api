@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: cashcontrol
     ports:
       - 5432:5432
+    networks:
+      - app-network
   api:
     container_name: api
     build:
@@ -19,3 +21,8 @@ services:
     depends_on:
       - db
     command: ./wait-for.sh db:27017 -- ./init.sh
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
