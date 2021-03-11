@@ -23,7 +23,8 @@ services:
       - db
     networks:
       - app-network
-    command: ./wait-for.sh db:5432 -- ./init.sh
+    #command: ./wait-for.sh db:5432 -- ./init.sh
+    command: ./init.sh
 networks:
   app-network:
     driver: bridge
