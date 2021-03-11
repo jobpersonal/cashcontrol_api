@@ -56,7 +56,7 @@ const signInController = async (req, res) => {
           const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20m' });
           const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
           refreshTokens.push(refreshToken);
-          res.json({ token: accessToken, refresh_token: refreshToken, data: user });
+          res.status(200).json({ token: accessToken, refresh_token: refreshToken, data: user });
         });
       } catch (err) {
         res.status(501).json({ error: err });
